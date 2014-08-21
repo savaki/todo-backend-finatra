@@ -53,10 +53,11 @@ class DefaultTodoApi extends TodoApi {
     items.find(item => item.id == id)
   }
 
-  def create(item: TodoItem, fqdn: String => String): TodoItem = {
+  def create(template: TodoItem, fqdn: String => String): TodoItem = {
     val theId = UUID.randomUUID().toString
     val theUrl = fqdn(theId)
-    items.add(item.copy(id = theId, url = theUrl))
-    item
+    val item: TodoItem = template.copy(id = theId, url = theUrl)
+    items.add(item)
+    template
   }
 }

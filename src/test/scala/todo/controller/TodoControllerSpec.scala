@@ -58,6 +58,11 @@ class TodoControllerSpec extends Specification with ShouldMatchers with MockitoS
         result.getHeader("Location") shouldEqual s"/todos/${anItem.id}"
       }
 
+      "create a new item via POST /todos returns 201" in {
+        val result: MockResult = app.post("/todos", body = anItem)
+        result.status shouldEqual HttpResponseStatus.CREATED
+      }
+
       "create a new item via POST /todos returns item" in {
         val result: MockResult = app.post("/todos", body = anItem)
         val item: TodoItem = MockApp.mapper.readValue(result.body, classOf[TodoItem])

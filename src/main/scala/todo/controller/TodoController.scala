@@ -36,7 +36,7 @@ class TodoController(service: TodoApi) extends Controller {
     request =>
       val template: TodoItem = jsonMapper.readValue(request.getContentString(), classOf[TodoItem])
       val item: TodoItem = service.create(template, TodoController.fqdn)
-      render.header("Location", s"/todos/${item.id}").json(item).toFuture
+      render.header("Location", s"/todos/${item.id}").json(item).status(201).toFuture
   }
 
   patch("/todos/:id") {

@@ -35,13 +35,17 @@ class DefaultTodoApi extends TodoApi {
 
   def update(id: String, item: TodoItem): Option[TodoItem] = {
     find(id).map {
-      original => original.copy(
-        title = Option(item.title).getOrElse(original.title),
-        url = Option(item.url).getOrElse(original.url),
-        completed = item.completed,
-        order = item.order,
-        text = Option(item.text).getOrElse(original.text)
-      )
+      original =>
+        val updated: TodoItem = original.copy(
+          title = Option(item.title).getOrElse(original.title),
+          url = Option(item.url).getOrElse(original.url),
+          completed = item.completed,
+          order = item.order,
+          text = Option(item.text).getOrElse(original.text)
+        )
+        delete(id)
+        items.add(updated)
+        updated
     }
   }
 

@@ -1,0 +1,9 @@
+# intellij files
+/.idea
+/.idea_modules
+
+# class files
+/project/target
+/project/project
+/target
+

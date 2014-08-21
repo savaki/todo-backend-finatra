@@ -10,11 +10,12 @@ case class TodoItem(id: String,
                     text: String)
 
 object TodoItem {
-  def random(): TodoItem = {
+  def random(fqdn: String => String): TodoItem = {
+    val theId: String = UUID.randomUUID().toString
     TodoItem(
-      id = UUID.randomUUID().toString,
+      id = theId,
       title = UUID.randomUUID().toString,
-      url = UUID.randomUUID().toString,
+      url = fqdn(theId),
       completed = false,
       order = 123,
       text = UUID.randomUUID().toString

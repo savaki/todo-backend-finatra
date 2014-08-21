@@ -34,10 +34,9 @@ class TodoController(service: TodoApi) extends Controller {
 
   post("/todos") {
     request =>
-      val fqdn = (path: String) => s"http://todo-backend-finatra.herokuapp.com$path"
       val template: TodoItem = jsonMapper.readValue(request.getContentString(), classOf[TodoItem])
-      val item: TodoItem = service.create(template)
-      render.header("Location", fqdn(s"/todos/${item.id}")).json(item).toFuture
+      val item: TodoItem = service.create(template, TodoController.fqdn)
+      render.header("Location", item.url).json(item).toFuture
   }
 
   patch("/todos/:id") {
@@ -62,3 +61,6 @@ class TodoController(service: TodoApi) extends Controller {
   }
 }
 
+object TodoController {
+  val fqdn = (path: String) => s"http://todo-backend-finatra.herokuapp.com/todos/$path"
+}

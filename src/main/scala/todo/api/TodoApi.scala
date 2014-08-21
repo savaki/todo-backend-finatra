@@ -15,7 +15,7 @@ trait TodoApi {
 
   def update(id: String, item: TodoItem): Option[TodoItem]
 
-  def create(item: TodoItem): TodoItem
+  def create(item: TodoItem, fqdn: String => String): TodoItem
 
   def find(id: String): Option[TodoItem]
 
@@ -53,9 +53,10 @@ class DefaultTodoApi extends TodoApi {
     items.find(item => item.id == id)
   }
 
-  def create(item: TodoItem): TodoItem = {
-    val newId = UUID.randomUUID().toString
-    items.add(item.copy(id = newId))
+  def create(item: TodoItem, fqdn: String => String): TodoItem = {
+    val theId = UUID.randomUUID().toString
+    val theUrl = fqdn(theId)
+    items.add(item.copy(id = theId, url = theUrl))
     item
   }
 }

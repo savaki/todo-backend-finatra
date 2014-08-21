@@ -10,7 +10,7 @@ import todo.model.TodoItem
 import org.mockito.Mockito._
 
 class TodoControllerSpec extends Specification with ShouldMatchers with MockitoSugar {
-  val anItem: TodoItem = TodoItem.random()
+  val anItem: TodoItem = TodoItem.random(TodoController.fqdn)
 
   val updatedItem = anItem.copy(url = "http://www.google.com")
 
@@ -18,7 +18,7 @@ class TodoControllerSpec extends Specification with ShouldMatchers with MockitoS
     val api: TodoApi = mock[TodoApi]
     when(api.findAll()) thenReturn Array(anItem)
     when(api.find(anItem.id)) thenReturn Option(anItem)
-    when(api.create(anItem)) thenReturn anItem
+    when(api.create(anItem, TodoController.fqdn)) thenReturn anItem
     when(api.update(anItem.id, updatedItem)) thenReturn Option(updatedItem)
     api
   }

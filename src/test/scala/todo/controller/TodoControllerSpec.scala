@@ -55,7 +55,7 @@ class TodoControllerSpec extends Specification with ShouldMatchers with MockitoS
     "create and update via POST and PATCH" in {
       "create a new item via POST /todos" in {
         val result: MockResult = app.post("/todos", body = anItem)
-        result.getHeader("Location") shouldEqual s"http://todo-backend-finatra.herokuapp.com/todos/${anItem.id}"
+        result.getHeader("Location") shouldEqual s"/todos/${anItem.id}"
       }
 
       "update an existing item via PATCH /todos/:id" in {

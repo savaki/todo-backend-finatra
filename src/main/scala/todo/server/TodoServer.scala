@@ -9,12 +9,15 @@ import todo.controller.TodoController
 
 class CorsFilter extends Filter[FinagleRequest, FinagleResponse, FinagleRequest, FinagleResponse] {
   override def apply(request: FinagleRequest, service: Service[FinagleRequest, FinagleResponse]): Future[FinagleResponse] = {
-    request
-      .headers()
-      .add("access-control-allow-origin", "*")
-      .add("access-control-allow-headers", "accept, content-type")
-      .add("access-control-allow-methods", "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH")
-    service(request)
+    service(request).map {
+      response =>
+        response
+          .headers()
+          .add("access-control-allow-origin", "*")
+          .add("access-control-allow-headers", "accept, content-type")
+          .add("access-control-allow-methods", "GET,HEAD,POST,DELETE,OPTIONS,PUT,PATCH")
+        response
+    }
   }
 }
 

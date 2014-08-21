@@ -16,3 +16,6 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-all" % "1.9.5" % "test"
 )
 
+// alias for heroku
+addCommandAlias("stage", "assembly")
+

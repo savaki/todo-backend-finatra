@@ -58,6 +58,6 @@ class DefaultTodoApi extends TodoApi {
     val theUrl = fqdn(theId)
     val item: TodoItem = template.copy(id = theId, url = theUrl)
     items.add(item)
-    template
+    item
   }
 }
